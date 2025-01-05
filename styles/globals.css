@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 0 0% 3.9%;
+        --muted: 0 0% 96.1%;
+        --muted-foreground: 0 0% 45.1%;
+    }
+
+    .dark {
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+@layer utilities {
+    .border-border {
+        border-color: var(--muted-foreground);
+        /* Adjust as needed */
+    }
+}
+
+@layer utilities {
+    .bg-background {
+        background-color: hsl(var(--background));
+    }
+
+    .text-foreground {
+        color: hsl(var(--foreground));
+    }
+}
+
+.prose {
+    max-width: 65ch;
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    line-height: 1.7;
+    letter-spacing: -0.02em;
+}
+
+.prose p {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.prose h2 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
