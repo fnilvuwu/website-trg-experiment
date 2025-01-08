@@ -25,10 +25,21 @@ export function NeuralNetwork() {
 
     // Set canvas size
     const setCanvasSize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      canvas.style.width = `${window.innerWidth}px`
-      canvas.style.height = `${window.innerHeight}px`
+      const margin = 20 // Margin for better fit
+      const width = window.innerWidth - margin * 2
+      const height = window.innerHeight - margin * 2
+      const aspectRatio = 16 / 9 // Maintain a good aspect ratio
+
+      if (width / height > aspectRatio) {
+        canvas.width = height * aspectRatio
+        canvas.height = height
+      } else {
+        canvas.width = width
+        canvas.height = width / aspectRatio
+      }
+
+      canvas.style.width = `${canvas.width}px`
+      canvas.style.height = `${canvas.height}px`
     }
     setCanvasSize()
     window.addEventListener('resize', setCanvasSize)
@@ -43,17 +54,17 @@ export function NeuralNetwork() {
     ]
     const letters = ['D', 'S', 'A', 'I']
     // Position neurons with non-proportional spacing
-    const margin = 100
-    const layerSpacing = (canvas.width - margin * 2) / (layers.length - 1)
+    const padding = 40 // Padding to ensure letters are fully visible
+    const layerSpacing = (canvas.width - padding * 2) / (layers.length - 1)
 
     layers.forEach((layer, layerIndex) => {
       const layerHeight = canvas.height * (0.5 + Math.random() * 0.5) // Random height between 50% and 100% of canvas height
-      const neuronSpacing = (layerHeight - margin * 2) / (layer.neurons.length - 1)
+      const neuronSpacing = (layerHeight - padding * 2) / (layer.neurons.length - 1)
       const layerOffset = (canvas.height - layerHeight) / 2 // Center the layer vertically
 
       layer.neurons.forEach((neuron, neuronIndex) => {
-        neuron.x = margin + layerIndex * layerSpacing
-        neuron.y = layerOffset + margin + neuronIndex * neuronSpacing
+        neuron.x = padding + layerIndex * layerSpacing
+        neuron.y = layerOffset + padding + neuronIndex * neuronSpacing
 
         // Connect to next layer
         if (layerIndex < layers.length - 1) {
@@ -121,15 +132,22 @@ export function NeuralNetwork() {
         const sourceNeuron = Math.floor(Math.random() * layers[sourceLayer].neurons.length)
         const targetNeuron = Math.floor(Math.random() * layers[sourceLayer + 1].neurons.length)
 
-        particles.push({
-          x: layers[sourceLayer].neurons[sourceNeuron].x,
-          y: layers[sourceLayer].neurons[sourceNeuron].y,
-          targetX: layers[sourceLayer + 1].neurons[targetNeuron].x,
-          targetY: layers[sourceLayer + 1].neurons[targetNeuron].y,
-          layerIndex: sourceLayer,
-          sourceIndex: sourceNeuron,
-          targetIndex: targetNeuron
-        })
+        if (
+          layers[sourceLayer] &&
+          layers[sourceLayer].neurons[sourceNeuron] &&
+          layers[sourceLayer + 1] &&
+          layers[sourceLayer + 1].neurons[targetNeuron]
+        ) {
+          particles.push({
+            x: layers[sourceLayer].neurons[sourceNeuron].x,
+            y: layers[sourceLayer].neurons[sourceNeuron].y,
+            targetX: layers[sourceLayer + 1].neurons[targetNeuron].x,
+            targetY: layers[sourceLayer + 1].neurons[targetNeuron].y,
+            layerIndex: sourceLayer,
+            sourceIndex: sourceNeuron,
+            targetIndex: targetNeuron
+          })
+        }
       }
 
       // Update and draw particles
@@ -169,7 +187,7 @@ export function NeuralNetwork() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
+      className="block mx-auto"
     />
   )
 }
