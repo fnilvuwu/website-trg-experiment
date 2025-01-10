@@ -11,7 +11,7 @@ export function Typewriter({ text }: TypewriterProps) {
 
   useEffect(() => {
     const handleType = () => {
-      const fullText = text
+      const fullText = text + " "
 
       setDisplayedText(
         isDeleting
@@ -22,16 +22,14 @@ export function Typewriter({ text }: TypewriterProps) {
       setTypingSpeed(isDeleting ? 30 : 150)
 
       if (!isDeleting && displayedText === fullText) {
-        setTimeout(() => setIsDeleting(true), 2000) // Increase idle duration here
+        setTimeout(() => setIsDeleting(true), 4000) // Increase idle duration here
       } else if (isDeleting && displayedText === '') {
         setIsDeleting(false)
       }
     }
 
-    if (displayedText !== text) {
-      const timer = setTimeout(handleType, typingSpeed)
-      return () => clearTimeout(timer)
-    }
+    const timer = setTimeout(handleType, typingSpeed)
+    return () => clearTimeout(timer)
   }, [displayedText, isDeleting, text, typingSpeed])
 
   return (

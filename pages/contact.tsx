@@ -1,40 +1,88 @@
+import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/react/24/outline'
 import { NavBar } from '../components/nav-bar'
 
-export default function AboutPage() {
+export default function ContactPage() {
     return (
         <main className="min-h-screen bg-white">
             <NavBar />
             <article className="max-w-3xl mx-auto px-4 py-16 md:py-24 flex-grow">
                 <header className="space-y-8 mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-center">
-                        Contact
+                        Contact Us
                     </h1>
                     <div className="text-center uppercase tracking-wider text-sm text-muted-foreground">
-                        Written by CONST, CORE DEV @ OPENTENSOR
+                        Get in Touch with DSAI Lab
                     </div>
                 </header>
 
-                <section className="mb-16">
-                    <h2 className="uppercase text-sm font-medium tracking-wider text-muted-foreground mb-8">
-                        GET IN TOUCH WITH DSAI
-                    </h2>
-                    <div className="space-y-8">
-                        <p className="leading-relaxed">
-                            The invention of Bitcoin was a revolutionary moment for humanity because it introduced two simultaneously united yet distinct technological innovations, reshaping the way that humans organize themselves. Primarily, it was the first ever decentralized currency, which gave humanity a shared value system - one that could not be mutated by vested or centralized interests. With this, Bitcoin promised a future of fair, anti-fiat, finance.
-                        </p>
-                        <p className="leading-relaxed">
-                            Secondly and to achieve this aim, it birthed the original, disseminated, and permissionless digital commodity market. This second point has not been overlooked by anyone who has been watching closely - the Bitcoin network's computational power, measured in raw hashing power, has blast past the potential of any company or government.
-                        </p>
-                        <p className="leading-relaxed">
-                            Bittensor is essentially a language for writing numerous decentralized commodity markets, or 'subnets', situated under a unified token system. These distinct markets function through Bittensor's blockchain, allowing each to interact and join into a singular computing infrastructure. By analogy, Bittensor brings the same type of abstraction which Ethereum added to Bitcoin for running decentralized contracts, but onto Bitcoin's inverse innovation — <span className="italic">digital markets</span>.
-                        </p>
-                        <p className="leading-relaxed">
-                            Compared to Bitcoin and other cryptocurrencies attempting to leverage the digital marketplace, Bittensor has built a framework that provides ease for creating these viable and enormously powerful systems. However, its genius lies in the fact that every one of these inter-networked markets is connectable, and available, to the whole. Building a hierarchical web of resources, ultimately culminating in the creation of a decentralized intelligence market.
-                        </p>
-                    </div>
-                </section>
+                <div className="space-y-16">
+                    {/* Research Collaboration */}
+                    <section className="space-y-6">
+                        <h3 className="font-semibold text-center uppercase tracking-wider text-md font-medium text-muted-foreground mb-8">
+                            Research Collaboration
+                        </h3>
+                        <div className="space-y-8">
+                            <p className="leading-relaxed">
+                                We welcome collaboration opportunities with academic institutions, industry partners, and fellow researchers.
+                                If you're interested in working with us on AI and Data Science applications in Food Science,
+                                please reach out via email with a brief description of your proposed collaboration.
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* For Students */}
+                    <section className="space-y-6">
+                        <h3 className="font-semibold text-center uppercase tracking-wider text-md font-medium text-muted-foreground mb-8">
+                            For Students
+                        </h3>
+                        <div className="space-y-8">
+                            <p className="leading-relaxed">
+                                If you're a student interested in joining our laboratory for research or thesis work,
+                                please send us your CV and research interests. We're always looking for motivated
+                                students who are passionate about AI and Food Science.
+                            </p>
+                        </div>
+                    </section>
+
+                    {/* Contact Information */}
+                    <section className="space-y-8">
+
+                        <h3 className="font-semibold text-center uppercase tracking-wider text-md font-medium text-muted-foreground mb-8">
+                            Contact Information
+                        </h3>
+
+                        <div className="space-y-6">
+                            <div className="flex items-center space-x-4">
+                                <MapPinIcon className="h-6 w-6 text-gray-600" />
+                                <div>
+                                    <p className="font-medium">Laboratory Location</p>
+                                    <p className="text-muted-foreground">Department of Mathematics</p>
+                                    <p className="text-muted-foreground">Hasanuddin University</p>
+                                    <p className="text-muted-foreground">Makassar, Indonesia</p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center space-x-4">
+                                <EnvelopeIcon className="h-6 w-6 text-gray-600" />
+                                <div>
+                                    <p className="font-medium">Email</p>
+                                    <a href="mailto:dsai.lab@unhas.ac.id" className="text-blue-600 hover:text-blue-800">
+                                        dsai.lab@unhas.ac.id
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center space-x-4">
+                                <PhoneIcon className="h-6 w-6 text-gray-600" />
+                                <div>
+                                    <p className="font-medium">Phone</p>
+                                    <p className="text-muted-foreground">+62 411 123456</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </article>
         </main>
     )
 }
-

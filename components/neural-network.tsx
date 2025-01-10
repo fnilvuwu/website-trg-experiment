@@ -163,7 +163,7 @@ export function NeuralNetwork() {
 
       // Update and draw particles with smoother animation
       particles = particles.filter(particle => {
-        particle.progress += 0.03
+        particle.progress += 0.005
         const t = particle.progress
         particle.x = particle.x + (particle.targetX - particle.x) * t
         particle.y = particle.y + (particle.targetY - particle.y) * t
@@ -181,7 +181,7 @@ export function NeuralNetwork() {
         ctx.stroke()
 
         ctx.beginPath()
-        ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2)
+        ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2)
         ctx.fillStyle = 'rgba(0, 0, 255, 0.8)'
         ctx.fill()
 
@@ -207,8 +207,7 @@ export function NeuralNetwork() {
   return (
     <canvas
       ref={canvasRef}
-      className="block mx-auto my-8 max-w-full"
-      style={{ minHeight: '400px' }}
+      className="block mx-auto max-w-full"
     />
   )
 }
