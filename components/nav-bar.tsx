@@ -81,7 +81,7 @@ export function NavBar() {
       </div>
 
       {isMenuOpen && (
-        <div className="navbar-mobile">
+        <div className="navbar-mobile md:hidden">
           <Link href="/" className="block text-sm font-medium text-gray-700">HOME</Link>
           <Link href="/overview" className="block text-sm font-medium text-gray-700">OVERVIEW</Link>
           <Link href="/team" className="block text-sm font-medium text-gray-700">TEAM</Link>

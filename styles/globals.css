@@ -136,27 +136,8 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    /* Full height of the viewport */
     overflow: hidden;
-    /* Prevent internal scrolling */
-    margin: 0;
-    /* Remove any default margin */
-    padding: 0;
-    /* Remove extra padding */
-    box-sizing: border-box;
-    /* Include padding and borders in dimensions */
-    position: fixed;
-    /* Ensure it stays in place */
-    top: 0;
-    /* Align with the top of the viewport */
-    left: 0;
-    /* Align with the left of the viewport */
-    width: 100%;
-    /* Occupy full width */
-    z-index: 50;
-    /* Same as the nav to stay above other content */
 }
-
 
 .navbar-mobile a {
     padding: 15px;
