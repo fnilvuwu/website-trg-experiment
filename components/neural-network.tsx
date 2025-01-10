@@ -23,61 +23,47 @@ export function NeuralNetwork() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Neural network configuration with fixed neuron sizes
+    // Neural network configuration with optimized neuron distribution
     const layers: Layer[] = [
-      { neurons: Array(5).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(4).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(6).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
       { neurons: Array(8).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(12).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(8).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(6).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
       { neurons: Array(4).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
     ]
 
     const setCanvasSize = () => {
-      const margin = 20 // Margin for better fit
-      const width = window.innerWidth - margin * 2
-      const height = window.innerHeight - margin * 2
-      const isPhone = window.innerWidth <= 768
+      const margin = 40 // Increased margin for better spacing
+      const width = Math.min(window.innerWidth - margin * 2, 1200) // Max width cap
+      const height = Math.min(600, window.innerHeight - margin * 2) // Max height cap
+      
+      // Set canvas size with device pixel ratio
+      const scale = window.devicePixelRatio || 1
+      canvas.width = width * scale
+      canvas.height = height * scale
+      canvas.style.width = `${width}px`
+      canvas.style.height = `${height}px`
+      ctx.scale(scale, scale)
+
+      // Position neurons
+      const layerSpacing = (width - margin * 2) / (layers.length - 1)
       const maxNeurons = Math.max(...layers.map(layer => layer.neurons.length))
-      const neuronSpacingWide = (height - margin * 2) / (maxNeurons - 1)
-      const neuronSpacingPhone = (height - margin * 2) / (maxNeurons * 2 - 1)
-      const neuronSpacing = isPhone ? neuronSpacingPhone : neuronSpacingWide
-
-      const canvasHeight = neuronSpacing * (maxNeurons - 1) + margin * 2
-      const aspectRatio = isPhone && window.innerHeight > window.innerWidth ? 9 / 16 : 16 / 9 // Maintain a good aspect ratio
-
-      if (isPhone) {
-        canvas.width = width
-        canvas.height = Math.min(canvasHeight, window.innerHeight - margin * 2)
-      } else {
-        if (width / canvasHeight > aspectRatio) {
-          canvas.width = canvasHeight * aspectRatio
-          canvas.height = canvasHeight
-        } else {
-          canvas.width = width
-          canvas.height = width / aspectRatio
-        }
-      }
-
-      canvas.style.width = `${canvas.width}px`
-      canvas.style.height = `${canvas.height}px`
-
-      // Position neurons with fixed spacing
-      const padding = 40 // Padding to ensure letters are fully visible
-      const layerSpacing = (canvas.width - padding * 2) / (layers.length - 1)
+      const neuronSpacing = (height - margin * 2) / (maxNeurons - 1)
 
       layers.forEach((layer, layerIndex) => {
-        const layerOffset = (canvas.height - (neuronSpacing * (layer.neurons.length - 1))) / 2 // Center the layer vertically
+        const layerHeight = (layer.neurons.length - 1) * neuronSpacing
+        const layerOffset = (height - layerHeight) / 2
 
         layer.neurons.forEach((neuron, neuronIndex) => {
-          neuron.x = padding + layerIndex * layerSpacing
+          neuron.x = margin + layerIndex * layerSpacing
           neuron.y = layerOffset + neuronIndex * neuronSpacing
 
-          // Connect to next layer
+          // Connect to next layer with improved connection distribution
           if (layerIndex < layers.length - 1) {
             const nextLayer = layers[layerIndex + 1]
-            neuron.connections = Array(nextLayer.neurons.length).fill(0).map((_, i) => ({
+            neuron.connections = nextLayer.neurons.map((_, i) => ({
               targetIndex: i,
-              opacity: 0.1
+              opacity: 0.08 // Reduced base opacity for subtler connections
             }))
           }
         })
@@ -88,18 +74,22 @@ export function NeuralNetwork() {
     window.addEventListener('resize', setCanvasSize)
 
     const letters = ['D', 'S', 'A', 'I']
+    let particles: {
+      x: number
+      y: number
+      targetX: number
+      targetY: number
+      layerIndex: number
+      sourceIndex: number
+      targetIndex: number
+      progress: number
+    }[] = []
 
-    // Animation variables
-    let particles: { x: number; y: number; targetX: number; targetY: number; layerIndex: number; sourceIndex: number; targetIndex: number }[] = []
-    const particleSpeed = 0.02
-    const particleFadeSpeed = 0.05
-
-    // Animation function
     function animate() {
       if (!ctx) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Draw connections with dynamic opacity
+      // Draw connections
       layers.forEach((layer, layerIndex) => {
         if (layerIndex < layers.length - 1) {
           layer.neurons.forEach((neuron, neuronIndex) => {
@@ -112,78 +102,96 @@ export function NeuralNetwork() {
               ctx.lineTo(target.x, target.y)
               ctx.stroke()
 
-              // Fade out connection opacity
-              connection.opacity = Math.max(0.1, connection.opacity - particleFadeSpeed)
+              // Smoother opacity fade
+              connection.opacity = Math.max(0.08, connection.opacity * 0.95)
             })
           })
         }
       })
 
-      // Draw neurons
+      // Draw neurons with improved styling
       layers.forEach((layer, layerIndex) => {
         layer.neurons.forEach((neuron, neuronIndex) => {
           ctx.beginPath()
-          ctx.arc(neuron.x, neuron.y, 4, 0, Math.PI * 2)
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
+          ctx.arc(neuron.x, neuron.y, 3, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
           ctx.fill()
 
+          // Draw letters with improved positioning and zoom effect
           if (layerIndex === layers.length - 1) {
             const letter = letters[neuronIndex]
-            ctx.font = `${activeLetter === letter ? '24px' : '20px'} Arial`
-            ctx.fillStyle = activeLetter === letter ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.8)'
+            const isActive = activeLetter === letter
+            const fontSize = isActive ? 28 : 20
+            const fontWeight = isActive ? 'bold' : 'normal'
+            ctx.font = `${fontWeight} ${fontSize}px Inter, sans-serif`
+            ctx.fillStyle = isActive ? 'rgba(0, 0, 255, 0.9)' : 'rgba(0, 0, 0, 0.7)'
             ctx.textAlign = 'left'
             ctx.textBaseline = 'middle'
-            ctx.fillText(letter, neuron.x + 15, neuron.y)
+            
+            // Add a glow effect for active letters
+            if (isActive) {
+              ctx.shadowColor = 'rgba(0, 0, 255, 0.5)'
+              ctx.shadowBlur = 10
+            }
+            
+            ctx.fillText(letter, neuron.x + 12, neuron.y)
+            
+            // Reset shadow
+            ctx.shadowColor = 'transparent'
+            ctx.shadowBlur = 0
           }
         })
       })
 
-      // Random signal animation
-      if (Math.random() < 0.05) {
+      // Generate new particles with controlled frequency
+      if (Math.random() < 0.05) { // Increased frequency for more activity
         const sourceLayer = Math.floor(Math.random() * (layers.length - 1))
         const sourceNeuron = Math.floor(Math.random() * layers[sourceLayer].neurons.length)
         const targetNeuron = Math.floor(Math.random() * layers[sourceLayer + 1].neurons.length)
 
-        if (
-          layers[sourceLayer] &&
-          layers[sourceLayer].neurons[sourceNeuron] &&
-          layers[sourceLayer + 1] &&
-          layers[sourceLayer + 1].neurons[targetNeuron]
-        ) {
-          particles.push({
-            x: layers[sourceLayer].neurons[sourceNeuron].x,
-            y: layers[sourceLayer].neurons[sourceNeuron].y,
-            targetX: layers[sourceLayer + 1].neurons[targetNeuron].x,
-            targetY: layers[sourceLayer + 1].neurons[targetNeuron].y,
-            layerIndex: sourceLayer,
-            sourceIndex: sourceNeuron,
-            targetIndex: targetNeuron
-          })
-        }
+        particles.push({
+          x: layers[sourceLayer].neurons[sourceNeuron].x,
+          y: layers[sourceLayer].neurons[sourceNeuron].y,
+          targetX: layers[sourceLayer + 1].neurons[targetNeuron].x,
+          targetY: layers[sourceLayer + 1].neurons[targetNeuron].y,
+          layerIndex: sourceLayer,
+          sourceIndex: sourceNeuron,
+          targetIndex: targetNeuron,
+          progress: 0
+        })
       }
 
-      // Update and draw particles
+      // Update and draw particles with smoother animation
       particles = particles.filter(particle => {
-        const dx = particle.targetX - particle.x
-        const dy = particle.targetY - particle.y
-        particle.x += dx * particleSpeed
-        particle.y += dy * particleSpeed
+        particle.progress += 0.03
+        const t = particle.progress
+        particle.x = particle.x + (particle.targetX - particle.x) * t
+        particle.y = particle.y + (particle.targetY - particle.y) * t
 
-        // Activate connection
+        // Activate connection with smoother transition
         const sourceNeuron = layers[particle.layerIndex].neurons[particle.sourceIndex]
-        sourceNeuron.connections[particle.targetIndex].opacity = 0.8
+        sourceNeuron.connections[particle.targetIndex].opacity = 0.6
+
+        // Draw particle with trail effect
+        ctx.beginPath()
+        ctx.moveTo(particle.x, particle.y)
+        ctx.lineTo(particle.x - (particle.targetX - particle.x) * 0.1, particle.y - (particle.targetY - particle.y) * 0.1)
+        ctx.strokeStyle = 'rgba(0, 0, 255, 0.4)'
+        ctx.lineWidth = 2
+        ctx.stroke()
 
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.8)'
         ctx.fill()
 
-        if (particle.layerIndex === layers.length - 2 && Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
+        // Trigger letter animation when particle reaches end
+        if (particle.layerIndex === layers.length - 2 && t >= 0.95) {
           setActiveLetter(letters[particle.targetIndex])
-          setTimeout(() => setActiveLetter(null), 500) // Reset after 500ms
+          setTimeout(() => setActiveLetter(null), 400)
         }
 
-        return Math.abs(dx) > 1 || Math.abs(dy) > 1
+        return t < 1
       })
 
       requestAnimationFrame(animate)
@@ -199,7 +207,9 @@ export function NeuralNetwork() {
   return (
     <canvas
       ref={canvasRef}
-      className="block mx-auto"
+      className="block mx-auto my-8 max-w-full"
+      style={{ minHeight: '400px' }}
     />
   )
 }
+
