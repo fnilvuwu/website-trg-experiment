@@ -10,12 +10,12 @@ export default function AboutPage() {
                         Articles
                     </h1>
                     <div className="text-center uppercase tracking-wider text-sm text-muted-foreground">
-                        Written by CONST, CORE DEV @ OPENTENSOR
+                        ARTICLES CURATED BY DSAI
                     </div>
                 </header>
 
                 <section className="mb-16">
-                    <h2 className="uppercase text-sm font-medium tracking-wider text-muted-foreground mb-8">
+                    <h2 className="uppercase text-sm font-small tracking-wider text-muted-foreground mb-8">
                         ARTICLES CURATED BY DSAI
                     </h2>
                     <div className="space-y-8">

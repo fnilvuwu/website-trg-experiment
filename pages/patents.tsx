@@ -10,12 +10,12 @@ export default function AboutPage() {
                         Patents
                     </h1>
                     <div className="text-center uppercase tracking-wider text-sm text-muted-foreground">
-                        Written by CONST, CORE DEV @ OPENTENSOR
+                        PATENTS OWNED BY DSAI
                     </div>
                 </header>
 
                 <section className="mb-16">
-                    <h2 className="uppercase text-sm font-medium tracking-wider text-muted-foreground mb-8">
+                    <h2 className="uppercase text-sm font-small tracking-wider text-muted-foreground mb-8">
                         PATENTS OWNED BY DSAI
                     </h2>
                     <div className="space-y-8">
