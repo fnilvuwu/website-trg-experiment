@@ -37,21 +37,24 @@ export function NavBar() {
               TEAM
             </Link>
           </div>
-          <div className="relative flex items-center space-x-1 cursor-pointer" onClick={toggleDropdown}>
-            <span className="text-sm font-medium hover-effect">
+          <div
+            className="relative flex items-center space-x-1 cursor-pointer"
+            onClick={toggleDropdown}
+          >
+            <span className="text-sm font-medium">
               PUBLICATION
             </span>
             <ChevronDown className="h-4 w-4" />
             {isDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-md">
-                <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Articles
+              <div className="absolute top-full left-0 mt-2 ps-2 pe-4 bg-white rounded-md">
+                <Link href="/articles" className="bloc my-2 text-sm font-medium hover-effect">
+                  ARTICLES
                 </Link>
-                <Link href="/books" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Books
+                <Link href="/books" className="block my-2 text-sm font-medium hover-effect">
+                  BOOKS
                 </Link>
-                <Link href="/patents" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Patents
+                <Link href="/patents" className="block my-2 text-sm font-medium hover-effect">
+                  PATENTS
                 </Link>
               </div>
             )}
