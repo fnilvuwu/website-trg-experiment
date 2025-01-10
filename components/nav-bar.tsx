@@ -81,7 +81,7 @@ export function NavBar() {
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden mt-4 space-y-2">
+        <div className="navbar-mobile md:hidden">
           <Link href="/" className="block text-sm font-medium text-gray-700">
             HOME
           </Link>
@@ -91,27 +91,15 @@ export function NavBar() {
           <Link href="/team" className="block text-sm font-medium text-gray-700">
             TEAM
           </Link>
-          <div className="relative">
-            <div className="flex items-center space-x-1 cursor-pointer" onClick={toggleDropdown}>
-              <span className="text-sm font-medium text-gray-700">
-                PUBLICATION
-              </span>
-              <ChevronDown className="h-4 w-4" />
-            </div>
-            {isDropdownOpen && (
-              <div className="mt-2 w-48 bg-white shadow-lg rounded-md">
-                <Link href="/articles" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Articles
-                </Link>
-                <Link href="/books" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Books
-                </Link>
-                <Link href="/patents" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Patents
-                </Link>
-              </div>
-            )}
-          </div>
+          <Link href="/articles" className="block text-sm font-medium text-gray-700">
+            ARTICLES
+          </Link>
+          <Link href="/books" className="block text-sm font-medium text-gray-700">
+            BOOKS
+          </Link>
+          <Link href="/patents" className="block text-sm font-medium text-gray-700">
+            PATENTS
+          </Link>
           <Link href="/projects" className="block text-sm font-medium text-gray-700">
             PROJECTS
           </Link>

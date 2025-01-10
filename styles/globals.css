@@ -129,3 +129,17 @@
     margin-top: 2em;
     margin-bottom: 1em;
 }
+
+.navbar-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Full height of the viewport */
+}
+
+.navbar-mobile a {
+    padding: 15px;
+    position: relative;
+}
