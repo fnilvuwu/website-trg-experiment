@@ -81,36 +81,19 @@ export function NavBar() {
       </div>
 
       {isMenuOpen && (
-        <div className="navbar-mobile md:hidden">
-          <Link href="/" className="block text-sm font-medium text-gray-700">
-            HOME
-          </Link>
-          <Link href="/overview" className="block text-sm font-medium text-gray-700">
-            OVERVIEW
-          </Link>
-          <Link href="/team" className="block text-sm font-medium text-gray-700">
-            TEAM
-          </Link>
-          <Link href="/articles" className="block text-sm font-medium text-gray-700">
-            ARTICLES
-          </Link>
-          <Link href="/books" className="block text-sm font-medium text-gray-700">
-            BOOKS
-          </Link>
-          <Link href="/patents" className="block text-sm font-medium text-gray-700">
-            PATENTS
-          </Link>
-          <Link href="/projects" className="block text-sm font-medium text-gray-700">
-            PROJECTS
-          </Link>
-          <Link href="/activities" className="block text-sm font-medium text-gray-700">
-            ACTIVITIES
-          </Link>
-          <Link href="/contact" className="block text-sm font-medium text-gray-700">
-            CONTACT
-          </Link>
+        <div className="navbar-mobile">
+          <Link href="/" className="block text-sm font-medium text-gray-700">HOME</Link>
+          <Link href="/overview" className="block text-sm font-medium text-gray-700">OVERVIEW</Link>
+          <Link href="/team" className="block text-sm font-medium text-gray-700">TEAM</Link>
+          <Link href="/articles" className="block text-sm font-medium text-gray-700">ARTICLES</Link>
+          <Link href="/books" className="block text-sm font-medium text-gray-700">BOOKS</Link>
+          <Link href="/patents" className="block text-sm font-medium text-gray-700">PATENTS</Link>
+          <Link href="/projects" className="block text-sm font-medium text-gray-700">PROJECTS</Link>
+          <Link href="/activities" className="block text-sm font-medium text-gray-700">ACTIVITIES</Link>
+          <Link href="/contact" className="block text-sm font-medium text-gray-700">CONTACT</Link>
         </div>
       )}
+
     </nav>
   )
 }
