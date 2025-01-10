@@ -153,8 +153,6 @@
     /* Align with the left of the viewport */
     width: 100%;
     /* Occupy full width */
-    background: hsl(var(--background));
-    /* Background color from your Tailwind setup */
     z-index: 50;
     /* Same as the nav to stay above other content */
 }
