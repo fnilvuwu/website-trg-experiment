@@ -47,7 +47,7 @@ export function NeuralNetwork() {
 
       if (isPhone) {
         canvas.width = width
-        canvas.height = canvasHeight
+        canvas.height = Math.min(canvasHeight, window.innerHeight - margin * 2)
       } else {
         if (width / canvasHeight > aspectRatio) {
           canvas.width = canvasHeight * aspectRatio
