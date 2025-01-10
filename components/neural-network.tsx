@@ -23,59 +23,71 @@ export function NeuralNetwork() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Set canvas size
+    // Neural network configuration with fixed neuron sizes
+    const layers: Layer[] = [
+      { neurons: Array(5).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(10).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(15).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(10).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(4).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+    ]
+
     const setCanvasSize = () => {
       const margin = 20 // Margin for better fit
       const width = window.innerWidth - margin * 2
       const height = window.innerHeight - margin * 2
-      const aspectRatio = 16 / 9 // Maintain a good aspect ratio
+      const isPhone = window.innerWidth <= 768
+      const maxNeurons = Math.max(...layers.map(layer => layer.neurons.length))
+      const neuronSpacingWide = (height - margin * 2) / (maxNeurons - 1)
+      const neuronSpacingPhone = (height - margin * 2) / (maxNeurons * 2 - 1)
+      const neuronSpacing = isPhone ? neuronSpacingPhone : neuronSpacingWide
 
-      if (width / height > aspectRatio) {
-        canvas.width = height * aspectRatio
-        canvas.height = height
-      } else {
+      const canvasHeight = neuronSpacing * (maxNeurons - 1) + margin * 2
+      const aspectRatio = isPhone && window.innerHeight > window.innerWidth ? 9 / 16 : 16 / 9 // Maintain a good aspect ratio
+
+      if (isPhone) {
         canvas.width = width
-        canvas.height = width / aspectRatio
+        canvas.height = canvasHeight
+      } else {
+        if (width / canvasHeight > aspectRatio) {
+          canvas.width = canvasHeight * aspectRatio
+          canvas.height = canvasHeight
+        } else {
+          canvas.width = width
+          canvas.height = width / aspectRatio
+        }
       }
 
       canvas.style.width = `${canvas.width}px`
       canvas.style.height = `${canvas.height}px`
+
+      // Position neurons with fixed spacing
+      const padding = 40 // Padding to ensure letters are fully visible
+      const layerSpacing = (canvas.width - padding * 2) / (layers.length - 1)
+
+      layers.forEach((layer, layerIndex) => {
+        const layerOffset = (canvas.height - (neuronSpacing * (layer.neurons.length - 1))) / 2 // Center the layer vertically
+
+        layer.neurons.forEach((neuron, neuronIndex) => {
+          neuron.x = padding + layerIndex * layerSpacing
+          neuron.y = layerOffset + neuronIndex * neuronSpacing
+
+          // Connect to next layer
+          if (layerIndex < layers.length - 1) {
+            const nextLayer = layers[layerIndex + 1]
+            neuron.connections = Array(nextLayer.neurons.length).fill(0).map((_, i) => ({
+              targetIndex: i,
+              opacity: 0.1
+            }))
+          }
+        })
+      })
     }
+
     setCanvasSize()
     window.addEventListener('resize', setCanvasSize)
 
-    // Neural network configuration with non-proportional layers
-    const layers: Layer[] = [
-      { neurons: Array(5).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(8).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(12).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(6).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(4).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-    ]
     const letters = ['D', 'S', 'A', 'I']
-    // Position neurons with non-proportional spacing
-    const padding = 40 // Padding to ensure letters are fully visible
-    const layerSpacing = (canvas.width - padding * 2) / (layers.length - 1)
-
-    layers.forEach((layer, layerIndex) => {
-      const layerHeight = canvas.height * (0.5 + Math.random() * 0.5) // Random height between 50% and 100% of canvas height
-      const neuronSpacing = (layerHeight - padding * 2) / (layer.neurons.length - 1)
-      const layerOffset = (canvas.height - layerHeight) / 2 // Center the layer vertically
-
-      layer.neurons.forEach((neuron, neuronIndex) => {
-        neuron.x = padding + layerIndex * layerSpacing
-        neuron.y = layerOffset + padding + neuronIndex * neuronSpacing
-
-        // Connect to next layer
-        if (layerIndex < layers.length - 1) {
-          const nextLayer = layers[layerIndex + 1]
-          neuron.connections = Array(nextLayer.neurons.length).fill(0).map((_, i) => ({
-            targetIndex: i,
-            opacity: 0.1
-          }))
-        }
-      })
-    })
 
     // Animation variables
     let particles: { x: number; y: number; targetX: number; targetY: number; layerIndex: number; sourceIndex: number; targetIndex: number }[] = []
