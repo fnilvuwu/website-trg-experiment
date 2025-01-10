@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white flex flex-col">
       <NavBar />
-      <div className="flex-grow relative px-4 flex flex-col items-center justify-center">
+      <div className="flex-grow relative px-4 flex flex-col items-center justify-center fade-in">
         <div className="flex flex-col items-center">
           <NeuralNetwork />
         </div>

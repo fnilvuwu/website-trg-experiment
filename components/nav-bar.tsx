@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export function NavBar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -23,22 +23,22 @@ export function NavBar() {
 
         <div className="hidden md:flex items-center space-x-8">
           <div className="flex items-center space-x-1">
-            <Link href="/" className="text-sm font-medium">
+            <Link href="/" className="text-sm font-medium hover-effect">
               HOME
             </Link>
           </div>
           <div className="flex items-center space-x-1">
-            <Link href="/overview" className="text-sm font-medium">
+            <Link href="/overview" className="text-sm font-medium hover-effect">
               OVERVIEW
             </Link>
           </div>
           <div className="flex items-center space-x-1">
-            <Link href="/team" className="text-sm font-medium">
+            <Link href="/team" className="text-sm font-medium hover-effect">
               TEAM
             </Link>
           </div>
           <div className="relative flex items-center space-x-1 cursor-pointer" onClick={toggleDropdown}>
-            <span className="text-sm font-medium">
+            <span className="text-sm font-medium hover-effect">
               PUBLICATION
             </span>
             <ChevronDown className="h-4 w-4" />
@@ -57,17 +57,17 @@ export function NavBar() {
             )}
           </div>
           <div className="flex items-center space-x-1">
-            <Link href="/projects" className="text-sm font-medium">
+            <Link href="/projects" className="text-sm font-medium hover-effect">
               PROJECTS
             </Link>
           </div>
           <div className="flex items-center space-x-1">
-            <Link href="/activities" className="text-sm font-medium">
+            <Link href="/activities" className="text-sm font-medium hover-effect">
               ACTIVITIES
             </Link>
           </div>
           <div className="flex items-center space-x-1">
-            <Link href="/contact" className="text-sm font-medium">
+            <Link href="/contact" className="text-sm font-medium hover-effect">
               CONTACT
             </Link>
           </div>
