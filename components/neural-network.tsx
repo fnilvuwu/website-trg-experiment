@@ -26,9 +26,9 @@ export function NeuralNetwork() {
     // Neural network configuration with fixed neuron sizes
     const layers: Layer[] = [
       { neurons: Array(5).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(10).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(15).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
-      { neurons: Array(10).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(8).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(12).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
+      { neurons: Array(8).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
       { neurons: Array(4).fill(0).map(() => ({ x: 0, y: 0, connections: [] })) },
     ]
 
